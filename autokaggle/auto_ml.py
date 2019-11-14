@@ -63,11 +63,11 @@ class AutoKaggle(BaseEstimator):
     def __init__(self, path=None, verbose=True, time_limit=None, use_ensembling=True,
                  num_estimators_ensemble=50, ensemble_strategy='stacking',
                  ensemble_method='max_voting',
-                 search_iter=500, cv_folds=3, subsample_ratio=0.1,
+                 search_iter=100, cv_folds=3, subsample_ratio=0.1,
                  random_ensemble=False, diverse_ensemble=True,
                  stack_probabilities=False, data_info=None, upsample_classes=False,
-                 ensembling_search_iter=10,
-                 search_algo='random', num_p_hparams=10):
+                 ensembling_search_iter=1,
+                 search_algo='tpe', num_p_hparams=10):
         self.is_trained = False
         if not path:
             path = rand_temp_folder_generator()
@@ -133,10 +133,10 @@ class AutoKaggle(BaseEstimator):
 
         # self.pipeline = AutoPipe(LGBMClassifier, {}, {}, self.config)
         # Search the top preprocessing setting
-        trials = self.search(x, y, self.p_hparams_base, self.m_hparams_base)
-        p_hparams = self.get_top_prep(trials, self.config.num_p_hparams)
+        # trials = self.search(x, y, self.p_hparams_base, self.m_hparams_base)
+        # p_hparams = self.get_top_prep(trials, self.config.num_p_hparams)
         # Search the best pipelines
-        trials = self.search(x, y, p_hparams, self.m_hparams_base)
+        trials = self.search(x, y, {}, self.m_hparams)
         self.pipeline = self.get_best_pipeline(trials)
         # Fit data
         self.pipeline.fit(x, y)

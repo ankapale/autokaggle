@@ -440,7 +440,6 @@ if __name__ == "__main__":
                                 9914, 3020, 3524, 3573, 3962]
     ak = BenchmarkingAutoKaggle(sess_name='test_perf')
     import time
-
     # t1 = time.time()
     # for _ in range(1):
     #     ak.run_automation(classification_task_list)
